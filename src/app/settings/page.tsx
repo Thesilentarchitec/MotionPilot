@@ -6,8 +6,6 @@ import { createClient } from '@/lib/supabase/client';
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [schedule, setSchedule] = useState<string[]>([]);
-  const [themes, setThemes] = useState<string[]>([]);
-  const [platformToggles, setPlatformToggles] = useState<Record<string, boolean>>({});
 
   const supabase = createClient();
 
@@ -16,7 +14,7 @@ export default function SettingsPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('settings')
         .select('*')
         .eq('user_id', user.id)
@@ -24,8 +22,6 @@ export default function SettingsPage() {
 
       if (data) {
         setSchedule(data.schedule_times || []);
-        setThemes(data.themes || []);
-        setPlatformToggles(data.platform_toggles || {});
       }
       setLoading(false);
     }

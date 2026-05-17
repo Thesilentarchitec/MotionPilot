@@ -30,7 +30,7 @@ export const autopilotWorker = new Worker(
     
     const platformToggles = settings.platform_toggles as Record<Platform, boolean>;
     const enabledPlatforms = Object.entries(platformToggles)
-      .filter(([_, enabled]) => enabled)
+      .filter(([, enabled]) => enabled)
       .map(([platform]) => platform as Platform);
       
     if (enabledPlatforms.length === 0) {
@@ -66,7 +66,7 @@ export const autopilotWorker = new Worker(
       const publishingManager = new SocialPublishingManager();
       
       // Map enabled platforms to their mock tokens from env
-      const platformConfigs: any = {};
+      const platformConfigs: Record<string, string> = {};
       enabledPlatforms.forEach(p => {
         platformConfigs[p] = process.env[`${p.toUpperCase()}_ACCESS_TOKEN`] || 'mock_token';
       });
@@ -77,7 +77,7 @@ export const autopilotWorker = new Worker(
         quote: postContent.original.quote,
         caption: postContent.original.caption,
         hashtags: postContent.original.hashtags,
-        imageUrl: postContent.original.imageUrl,
+        imageUrl: postContent.platforms[0]?.imageUrl || '',
       }, platformConfigs);
 
       const allSuccessful = publishResults.every(r => r.success);

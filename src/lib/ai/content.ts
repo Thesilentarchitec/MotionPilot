@@ -48,7 +48,7 @@ export async function generateTextContent(theme: PostTheme): Promise<GeneratedCo
     if (!jsonMatch) throw new Error('No JSON found in response');
     return JSON.parse(jsonMatch[0]) as GeneratedContent;
   } catch (error) {
-    console.error('Failed to parse Claude response:', content);
+    console.error('Failed to parse Claude response:', content, error);
     throw new Error('Failed to generate valid text content');
   }
 }
@@ -63,9 +63,6 @@ export async function generateImage(quote: string, aspectRatio: 'v' | 's' | 'w')
     };
   }
 
-  // Map aspect ratio to DALL-E 3 formats
-  const size = aspectRatio === 'v' ? '1024x1792' : aspectRatio === 'w' ? '1792x1024' : '1024x1024';
-  
   const prompt = `A visually striking, high-quality professional photograph or digital art piece that captures the essence of this motivational quote: "${quote}". 
   Minimalist, luxury aesthetic, dark background, evocative lighting. 
   No text in the image. High resolution.`;
@@ -74,13 +71,13 @@ export async function generateImage(quote: string, aspectRatio: 'v' | 's' | 'w')
     model: 'dall-e-3',
     prompt: prompt,
     n: 1,
-    size: size as any,
+    size: (aspectRatio === 'v' ? '1024x1792' : aspectRatio === 'w' ? '1792x1024' : '1024x1024') as "1024x1024" | "1024x1792" | "1792x1024",
     response_format: 'url',
   });
 
   return {
-    url: response.data[0].url || '',
-    revisedPrompt: response.data[0].revised_prompt || '',
+    url: response.data?.[0]?.url || '',
+    revisedPrompt: response.data?.[0]?.revised_prompt || '',
   };
 }
 

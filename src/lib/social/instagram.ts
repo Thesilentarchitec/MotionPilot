@@ -3,21 +3,14 @@ import { PostData, PublishResult, SocialPlatform } from './types';
 export class InstagramPlatform extends SocialPlatform {
   name = 'instagram';
 
-  async publish(data: PostData, accessToken: string): Promise<PublishResult> {
+  async publish(data: PostData, _accessToken: string): Promise<PublishResult> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const unused = _accessToken;
     console.log(`[Instagram] Publishing post: ${data.quote}`);
     
     try {
       // Mocking Meta Graph API flow for Instagram
-      // 1. Create a media container
-      // 2. Poll for status (if needed)
-      // 3. Publish the container
-      
-      const caption = `"${data.quote}"\n\n${data.caption}\n\n${data.hashtags.join(' ')}`;
-      
       await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // Real implementation would use:
-      // const containerUrl = `https://graph.facebook.com/v19.0/${instagramAccountId}/media?image_url=${encodeURIComponent(data.imageUrl)}&caption=${encodeURIComponent(caption)}&access_token=${accessToken}`;
       
       return {
         success: true,
@@ -25,11 +18,12 @@ export class InstagramPlatform extends SocialPlatform {
         postId: `ig_${Math.random().toString(36).substr(2, 9)}`,
         url: `https://www.instagram.com/p/mock`,
       };
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown Instagram error';
       return {
         success: false,
         platform: this.name,
-        error: error.message || 'Unknown Instagram error',
+        error: errorMessage,
       };
     }
   }

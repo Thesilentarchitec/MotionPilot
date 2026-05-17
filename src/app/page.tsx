@@ -63,7 +63,7 @@ export default function Dashboard() {
           <div className="aspect-[16/9] border-0.5 border-foreground/10 bg-secondary flex items-center justify-center relative overflow-hidden group">
              <div className="absolute inset-0 bg-neutral-900 animate-pulse" />
              <div className="relative z-10 text-center space-y-4 max-w-lg px-8">
-               <p className="font-serif text-2xl italic">"Discipline is the bridge between goals and accomplishment."</p>
+               <p className="font-serif text-2xl italic">&quot;Discipline is the bridge between goals and accomplishment.&quot;</p>
                <p className="text-[10px] uppercase tracking-widest opacity-50">— mindset | discipline</p>
              </div>
              <div className="absolute bottom-4 right-4 flex gap-2">
@@ -74,7 +74,7 @@ export default function Dashboard() {
           </div>
           <div className="terminal-box">
              <p className="opacity-50 font-bold mb-1">Generated Caption:</p>
-             <p>Success isn't about greatness. It's about consistency. Consistent hard work leads to success. Greatness will come. #discipline #growth #mindset</p>
+             <p>Success isn&apos;t about greatness. It&apos;s about consistency. Consistent hard work leads to success. Greatness will come. #discipline #growth #mindset</p>
           </div>
         </div>
 
@@ -95,7 +95,7 @@ export default function Dashboard() {
           </div>
 
           <div className="space-y-4">
-            <p className="text-[10px] uppercase tracking-widest opacity-30">Today's Schedule</p>
+            <p className="text-[10px] uppercase tracking-widest opacity-30">Today&apos;s Schedule</p>
             <div className="space-y-3">
               {[
                 { time: "06:00", status: "Posted" },

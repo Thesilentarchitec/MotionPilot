@@ -3,7 +3,7 @@ import { PostData, PublishResult, SocialPlatform } from './types';
 export class SnapchatPlatform extends SocialPlatform {
   name = 'snapchat';
 
-  async publish(data: PostData, accessToken: string): Promise<PublishResult> {
+  async publish(data: PostData, _accessToken: string): Promise<PublishResult> {
     console.log(`[Snapchat] Publishing post: ${data.quote}`);
     
     try {
@@ -20,11 +20,12 @@ export class SnapchatPlatform extends SocialPlatform {
         postId: `sc_${Math.random().toString(36).substr(2, 9)}`,
         url: `https://www.snapchat.com/mock`,
       };
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown Snapchat error';
       return {
         success: false,
         platform: this.name,
-        error: error.message || 'Unknown Snapchat error',
+        error: errorMessage,
       };
     }
   }
