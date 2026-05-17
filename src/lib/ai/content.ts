@@ -1,4 +1,4 @@
-import { anthropic, openai } from './config';
+import { getAnthropic, getOpenAI } from './config';
 import { formatContentForPlatform, Platform } from './formatter';
 
 export type PostTheme = 'mindset' | 'discipline' | 'success' | 'resilience' | 'focus' | 'growth' | 'abundance' | 'leadership';
@@ -35,6 +35,7 @@ export async function generateTextContent(theme: PostTheme): Promise<GeneratedCo
   "caption": "the caption text",
   "hashtags": ["hashtag1", "hashtag2", ...]`;
 
+  const anthropic = getAnthropic();
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-20250514', // As specified in core features
     max_tokens: 1000,
@@ -67,6 +68,7 @@ export async function generateImage(quote: string, aspectRatio: 'v' | 's' | 'w')
   Minimalist, luxury aesthetic, dark background, evocative lighting. 
   No text in the image. High resolution.`;
 
+  const openai = getOpenAI();
   const response = await openai.images.generate({
     model: 'dall-e-3',
     prompt: prompt,
