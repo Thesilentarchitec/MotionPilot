@@ -81,7 +81,17 @@ export async function generateImage(quote: string, aspectRatio: 'v' | 's' | 'w')
   };
 }
 
-export async function generateFullPost(theme: PostTheme, platforms: Platform[]) {
+export interface PlatformPostContent {
+  platform: Platform;
+  caption: string;
+  aspectRatio: string;
+  imageUrl?: string;
+}
+
+export async function generateFullPost(theme: PostTheme, platforms: Platform[]): Promise<{
+  original: GeneratedContent;
+  platforms: PlatformPostContent[];
+}> {
   const textContent = await generateTextContent(theme);
   
   // Generate unique visual variations for each aspect ratio required
