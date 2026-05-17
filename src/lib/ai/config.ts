@@ -3,19 +3,23 @@ import OpenAI from 'openai';
 
 // Use a getter to avoid initializing at build time when env vars might be missing
 export const getAnthropic = () => {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    throw new Error('ANTHROPIC_API_KEY is not defined');
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey || apiKey === 'your-anthropic-key') {
+    // Return a dummy client that will fail gracefully if used, 
+    // but won't crash the import during build.
+    return new Anthropic({ apiKey: 'dummy-key' });
   }
   return new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
+    apiKey: apiKey,
   });
 };
 
 export const getOpenAI = () => {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error('OPENAI_API_KEY is not defined');
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey || apiKey === 'your-openai-key') {
+    return new OpenAI({ apiKey: 'dummy-key' });
   }
   return new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: apiKey,
   });
 };
