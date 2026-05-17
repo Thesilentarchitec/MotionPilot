@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --secondary: #fafafa;
+  --status-green: #22c55e;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --secondary: #0a0a0a;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-status-green selection:text-black font-mono;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 border-0.5 border-white/20 hover:border-white transition-colors duration-200 uppercase text-[10px] tracking-widest font-mono bg-transparent inline-flex items-center justify-center;
+  }
+  
+  .card {
+    @apply border-0.5 border-white/10 bg-secondary p-6;
+  }
+
+  .status-indicator {
+    @apply w-2 h-2 rounded-full bg-status-green shadow-[0_0_8px_rgba(34,197,94,0.5)];
+  }
+
+  .nav-link {
+    @apply text-[10px] uppercase tracking-widest opacity-50 hover:opacity-100 transition-opacity;
+  }
+  
+  .terminal-box {
+    @apply border-0.5 border-white/10 bg-secondary p-4 font-mono text-xs leading-relaxed;
+  }
+}
